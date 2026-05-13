@@ -80,6 +80,7 @@ const blogs = [
 
 const navItems = ["home", "projects", "blogs", "resume", "contact"];
 const HERO_IMAGE = "/hero-graduation.png";
+const RESUME_FILE = "/Keneisha_Wiggan_Resume.pdf";
 
 function Icon({ name, size = 18, className = "" }) {
   const icons = {
@@ -164,7 +165,7 @@ export default function App() {
           <DetailCollection
             eyebrow="Personal Portfolio"
             title="Portfolio projects"
-            intro="These projects show how I translate ideas into clear experiences, products, and career storytelling systems."
+            intro="These projects highlight how I organize initiatives, improve processes, coordinate cross-functional work, and deliver solutions that improve clarity, execution, and user experience."
             items={portfolioProjects}
             back={() => setPage("projects")}
           />
@@ -200,29 +201,24 @@ function Home({ setPage }) {
           </p>
 
           <div className="flex flex-wrap gap-3">
-            <button
-              onClick={() => setPage("projects")}
-              className="flex items-center gap-2 rounded-2xl bg-[#18324A] px-5 py-3 font-semibold text-white shadow-sm hover:bg-[#0F2538] focus:outline-none focus:ring-4 focus:ring-[#C9974A]/50"
-            >
-              Explore my work <Icon name="arrow" />
-            </button>
-            <button
-              onClick={() => setPage("resume")}
-              className="flex items-center gap-2 rounded-2xl border border-[#B88A44] bg-white px-5 py-3 font-semibold text-[#172033] shadow-sm hover:bg-[#F1E7D7] focus:outline-none focus:ring-4 focus:ring-[#C9974A]/40"
-            >
-              Download resume <Icon name="download" />
-            </button>
+           
+            <a
+  href={RESUME_FILE}
+  download
+  className="flex items-center gap-2 rounded-2xl border border-[#B88A44] bg-white px-5 py-3 font-semibold text-[#172033] shadow-sm hover:bg-[#F1E7D7] focus:outline-none focus:ring-4 focus:ring-[#C9974A]/40"
+>
+  Download resume <Icon name="download" />
+</a>
           </div>
         </motion.div>
 
         <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} className="relative">
-          <div className="aspect-[4/3] rounded-[2rem] border border-[#D9CBB4] bg-white p-4 shadow-xl">
+          <div className="mx-auto aspect-[4/5] max-w-md rounded-[2rem] border border-[#D9CBB4] bg-white p-3 shadow-xl">
             <div className="h-full overflow-hidden rounded-[1.5rem] bg-[#E9E2D4]">
               <img
                 src={HERO_IMAGE}
                 alt="Keneisha Wiggan graduation portrait"
-                className="h-full w-full object-cover object-center"
-              />
+className="h-full w-full object-cover object-top"              />
             </div>
           </div>
         </motion.div>
@@ -244,12 +240,13 @@ function Home({ setPage }) {
           ))}
         </div>
 
-        <button
-          onClick={() => setPage("blogs")}
-          className="mt-6 flex items-center gap-2 rounded-2xl bg-[#18324A] px-5 py-3 font-semibold text-white hover:bg-[#0F2538] focus:outline-none focus:ring-4 focus:ring-[#C9974A]/50"
-        >
-          Visit blogs page <Icon name="arrow" />
-        </button>
+       <a
+  href={RESUME_FILE}
+  download
+  className="mt-6 flex w-fit items-center gap-2 rounded-2xl bg-[#18324A] px-5 py-3 font-semibold text-white hover:bg-[#0F2538] focus:outline-none focus:ring-4 focus:ring-[#C9974A]/50"
+>
+  Download resume <Icon name="download" />
+</a> 
       </section>
     </div>
   );
@@ -322,13 +319,7 @@ function DetailCollection({ eyebrow, title, intro, items, back }) {
               </button>
             </div>
 
-            <div className="mt-5 flex flex-wrap gap-2">
-              {item.skills.map((skill) => (
-                <span key={skill} className="rounded-full border border-[#D9CBB4] bg-[#F8F5EF] px-3 py-1 text-sm font-medium text-[#3E4858]">
-                  {skill}
-                </span>
-              ))}
-            </div>
+            
           </article>
         ))}
       </div>
