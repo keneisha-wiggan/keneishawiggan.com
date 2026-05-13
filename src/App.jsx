@@ -1,943 +1,416 @@
-import { useMemo, useState } from "react";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 
-const ICONS = {
-  arrowRight: "→",
-  barChart: "▥",
-  book: "📘",
-  briefcase: "▣",
-  chevronRight: "›",
-  download: "↓",
-  file: "□",
-  mail: "✉",
-  menu: "☰",
-  shield: "🛡",
-  sparkles: "✦",
-  target: "◎",
-  users: "👥",
-  x: "×",
-};
-
-const VIEWS = ["home", "projectDetail", "blog", "blogPost", "resume", "contact"];
-const CONTACT_EMAIL = "keneishawiggan8@gmail.com";
-const LINKEDIN_URL = "linkedin.com/in/keneisha-wiggan";
-const RESUME_PDF_PATH = "/Keneisha_Wiggan_resume_top5_layout.pdf";
-const HEADSHOT_PATH = "/kwiggan-headshot.jpg";
-
-const projects = [
+const portfolioProjects = [
   {
-    id: "ai-studio-homepage-docs",
-    title: "Microsoft AI Studio Homepage, Documentation + Getting Started",
-    label: "Microsoft AI Studio • GA 2024",
-    category: "Learning Experience Design",
-    summary:
-      "Improved the Microsoft AI Studio homepage, documentation, tutorials, and getting-started guidance to help GenAI developers find resources and reach value faster.",
-    skillTags: ["Learning experience design", "Documentation strategy", "User research", "Activation"],
-    star: {
-      situation:
-        "Microsoft AI Studio had high monthly traffic, but many users struggled to discover getting-started materials, models, deployments, API keys, playgrounds, new features, and AI service capabilities.",
-      task:
-        "Redesign the homepage and learning guidance to improve discoverability, reduce onboarding confusion, and make key resources easier to access.",
-      action:
-        "Led design reviews and sprints, partnered with Azure OpenAI, AI Services, research, design, content, engineering, and product owners, updated documentation and tutorials, and surfaced key getting-started resources in one click.",
-      result:
-        "Launched the improved homepage and Learn tab at GA; 59.9% of homepage visitors used the getting-started Learn tab, showing that users could access and find value in the resource.",
-    },
-    recruiterWhy:
-      "Strongest Chegg-aligned project: it shows learning strategy, adult learner support, content systems, activation, and measurable engagement.",
+    title: "Recruiter Portfolio Website",
+    description:
+      "A guided portfolio that turns complex product work into clear recruiter-facing stories, case studies, and proof of impact.",
+    impact: "Improves clarity, scanability, and recruiter review speed.",
+    skills: ["UX Strategy", "Career Storytelling", "React", "Portfolio Design"],
+    document: "Recruiter-Portfolio-Case-Study.pdf",
   },
   {
-    id: "ai-studio-tutorials",
-    title: "Microsoft AI Studio End-to-End Tutorials",
-    label: "Microsoft AI Studio • Public Preview 2023",
-    category: "Skill-Building + Scaffolding",
-    summary:
-      "Created scenario-based tutorials that taught AI developers how key GenAI tools work together in an end-to-end journey.",
-    skillTags: ["Scaffolding", "Tutorial design", "Bug bash validation", "Content quality"],
-    star: {
-      situation:
-        "AI developers found it difficult to understand how different tools and features interacted inside the new Microsoft AI Studio experience.",
-      task:
-        "Create tutorials that reduced confusion and helped new users learn the platform through a practical, guided journey.",
-      action:
-        "Created a copilot, participated in bug bashes, analyzed user studies, gathered feedback from documentation and feature PMs, and built step-by-step tutorials with images and deep links.",
-      result:
-        "Delivered tutorials validated through a 12-person bug bash, receiving positive feedback that the documentation was helpful and giving users a clearer end-to-end learning path.",
-    },
-    recruiterWhy:
-      "Shows I can create structured learning paths, validate effectiveness, and help users build confidence with complex tools.",
+    title: "Achievement Storytelling Kit",
+    description:
+      "A framework that helps professionals translate their wins into resume bullets, interview stories, and promotion-ready language.",
+    impact: "Helps users communicate measurable value with confidence.",
+    skills: ["Product Thinking", "Writing Systems", "Content Strategy", "Coaching"],
+    document: "Achievement-Storytelling-Kit.pdf",
   },
   {
-    id: "workspace-landing-page",
-    title: "Azure Machine Learning Workspace Landing Page + QuickStart",
-    label: "Azure Machine Learning • Public Preview/GA",
-    category: "New User Journey",
-    summary:
-      "Improved the Azure Machine Learning landing page and QuickStart experience so users could find resources, tutorials, and resume work faster.",
-    skillTags: ["Golden path", "Competitive analysis", "Heuristic evaluation", "Learning resources"],
-    star: {
-      situation:
-        "Azure Machine Learning users struggled to get started, find tutorials, locate the studio, and understand how to quickly ramp up on the machine learning lifecycle.",
-      task:
-        "Improve the getting-started golden path through landing page updates, sample tutorials, clearer entry points, and better learning resources.",
-      action:
-        "Applied user research, SWOT analysis, heuristic evaluation, competitor insights, documentation updates, a QuickStart tutorial, and a call-to-action strategy with marketing to reduce navigation friction.",
-      result:
-        "The public preview landing page reached 5,823 customer activations, and the getting-started sample attracted 14% of new users who activated the workspace landing page in the measured launch window.",
-    },
-    recruiterWhy:
-      "Shows user research, learning design, growth strategy, and evidence-backed onboarding improvements.",
-  },
-  {
-    id: "notification-center",
-    title: "Microsoft AI Foundry Notification Center",
-    label: "Microsoft AI Foundry • Ignite 2025 (Microsoft Developer Conference)",
-    category: "Product Strategy + Engagement",
-    summary:
-      "Consolidated critical product, governance, agent, and model lifecycle alerts into a unified in-product notification hub.",
-    skillTags: ["Product strategy", "Behavioral engagement", "Compliance visibility", "Cross-team alignment"],
-    star: {
-      situation:
-        "Users had to navigate multiple Azure portals to locate policy and governance alerts, which delayed awareness and created friction for important product states.",
-      task:
-        "Lead the strategy, design, and delivery of a unified Notification Center for Microsoft AI Foundry in time for Ignite 2025 Public Preview.",
-      action:
-        "Conducted competitive analysis, partnered with App Workload and Alerts Management teams, prototyped the experience, aligned PM/design/engineering, and defined success metrics such as weekly active users, bell engagement, quick actions, and return usage.",
-      result:
-        "Launched the MVP with a notification bell and governance alert page, giving users one-click access to critical alerts and creating a foundation for multi-channel delivery and personalization.",
-    },
-    recruiterWhy:
-      "Shows I can drive product engagement, reduce friction, and turn complex enterprise workflows into actionable user experiences.",
-  },
-  {
-    id: "data-index",
-    title: "Microsoft AI Foundry Data + Index Experience",
-    label: "Microsoft AI Foundry • Ignite 2025",
-    category: "Information Architecture",
-    summary:
-      "Led the lift-and-shift of Data and Index experiences into Microsoft AI Foundry, improving navigation, consistency, and discoverability.",
-    skillTags: ["Information architecture", "Partner alignment", "Product storytelling", "Data onboarding"],
-    star: {
-      situation:
-        "Data-related surfaces across Microsoft AI Foundry were fragmented across datasets, Azure OpenAI files, stored completions, synthetic data, indexes, and vector stores.",
-      task:
-        "Create a more cohesive data management experience for the Ignite 2025 release while aligning multiple partner teams.",
-      action:
-        "Identified UX gaps, authored user stories, facilitated design sessions, prototyped flows with AI tools, aligned PM/design/engineering, and drove product review for leadership approval.",
-      result:
-        "Delivered a unified Data, Index, and Knowledge page direction that improved discoverability, reduced navigation gaps, and clarified ownership across data-related experiences.",
-    },
-    recruiterWhy:
-      "Shows I can structure complex product ecosystems into clearer user journeys and scalable systems.",
-  },
-  {
-    id: "resource-creation",
-    title: "Microsoft AI Foundry Resource Creation Redesign",
-    label: "Azure Portal • Build 2025 (Microsoft Developer Conference)",
-    category: "Onboarding + Enterprise Readiness",
-    summary:
-      "Redesigned Microsoft AI Foundry resource provisioning in Azure Portal to simplify first-time setup and reduce cognitive load.",
-    skillTags: ["Onboarding", "AI prototyping", "Enterprise readiness", "User research"],
-    star: {
-      situation:
-        "Creating a Microsoft AI Foundry setup required users to move through a 7–12 step, multi-resource flow across Azure AI Services, Hub, Key Vault, and Project setup.",
-      task:
-        "Simplify the setup experience for AI developers and IT admins while supporting enterprise defaults for identity, networking, and encryption.",
-      action:
-        "Used v0 and Microsoft Copilot to prototype due to limited design resourcing, validated concepts with IT admins and AI developers, and partnered with Azure Portal and Microsoft AI Foundry engineering teams.",
-      result:
-        "Reduced default project creation fields from 7 to 1 and consolidated setup into a single Microsoft AI Foundry Resource creation flow launched at Build 2025.",
-    },
-    recruiterWhy:
-      "Shows I can reduce learning friction, design for first-run success, and use AI tools to move quickly.",
-  },
-  {
-    id: "email-notifications",
-    title: "Azure Machine Learning Email Notifications",
-    label: "Azure Machine Learning • GA 2022",
-    category: "Customer Feedback + Product Launch",
-    summary:
-      "Launched Email Notifications in Azure Machine Learning Studio by turning customer feedback into roadmap, UX, release, and measurement work.",
-    skillTags: ["Customer interviews", "Roadmap", "Release readiness", "Metrics"],
-    star: {
-      situation:
-        "Machine learning users needed instant feedback on important tasks and product events while carrying out the machine learning process.",
-      task:
-        "Define, validate, and launch an email notification experience from MVP through public preview and general availability.",
-      action:
-        "Gathered customer requirements, conducted competitive analysis, created mockups, validated with customers, authored the technical specification, partnered with UX and engineering, and completed privacy/security reviews.",
-      result:
-        "Delivered the notification feature through preview and GA readiness, improving user awareness, productivity, and confidence in important machine learning workflows.",
-    },
-    recruiterWhy:
-      "Shows end-to-end product execution from research to release, with attention to compliance and performance metrics.",
-  },
-  {
-    id: "billing-cost-management",
-    title: "Microsoft AI Studio + Azure Machine Learning Billing and Cost Management",
-    label: "Microsoft AI Studio + Azure Machine Learning • 2023",
-    category: "Transparency + Decision Support",
-    summary:
-      "Designed billing and cost reporting experiences to help AI developers, machine learning professionals, and IT admins understand project and resource costs.",
-    skillTags: ["Customer research", "Cost transparency", "Telemetry", "Documentation"],
-    star: {
-      situation:
-        "Users struggled to understand project costs, identify cost-driving resources, and access cost information from the Azure Portal.",
-      task:
-        "Improve cost visibility so users could make better decisions and reduce confusion around AI and machine learning project costs.",
-      action:
-        "Reviewed feedback, tested product flows, created copilot scenarios, designed dashboard concepts, linked documentation and Azure Portal cost analysis, and hosted design sessions with UI engineering, Azure Portal cost analysis, UX, and PM partners.",
-      result:
-        "Delivered cost visibility improvements that helped users understand project and resource group costs, with telemetry planned to track billing page, documentation, and Azure Portal engagement.",
-    },
-    recruiterWhy:
-      "Shows ability to turn learner/user confusion into decision support, product guidance, and measurable signals.",
-  },
-  {
-    id: "vulnerability-dashboard",
-    title: "Azure Machine Learning Vulnerability Dashboard",
-    label: "Azure Machine Learning • Enterprise Risk",
-    category: "Enterprise UX + Risk Visibility",
-    summary:
-      "Redesigned a vulnerability dashboard to help IT admins identify affected resources, understand severity, and take action.",
-    skillTags: ["Enterprise UX", "Risk communication", "Customer validation", "Operational clarity"],
-    star: {
-      situation:
-        "IT administrators had difficulty identifying and addressing vulnerabilities within Azure Machine Learning environments, contributing to repeated support cases.",
-      task:
-        "Improve visibility into vulnerabilities and help users understand which resources were affected and what actions to take.",
-      action:
-        "Revamped the dashboard with affected resource tables, severity categories, insights, and recommendations; led design reviews and co-led customer interviews to validate the experience.",
-      result:
-        "Improved enterprise-scale visibility and created a clearer action path, with an anticipated reduction in vulnerability-related customer support cases.",
-    },
-    recruiterWhy:
-      "Shows I can make complex, high-stakes information understandable and actionable.",
-  },
-  {
-    id: "keneisha-portfolio",
-    title: "KeneishaWiggan.com Professional Portfolio",
-    label: "Personal Project",
-    category: "Personal Branding + Product Storytelling",
-    summary:
-      "Designed and built a professional portfolio website to showcase product strategy, case studies, and recruiter-ready storytelling.",
-    skillTags: ["Personal branding", "Portfolio strategy", "AI-assisted development", "Product storytelling"],
-    star: {
-      situation:
-        "Recruiters often struggle to quickly understand a candidate’s impact, thinking process, and alignment to roles from a traditional resume alone.",
-      task:
-        "Create a professional website that clearly communicates my experience, showcases projects using structured storytelling, and demonstrates how I think about product strategy and learning experiences.",
-      action:
-        "Designed the experience as a clickthrough product, structured projects into STAR-based case studies, used AI to generate layouts and content, built the site in Visual Studio Code, debugged errors, and managed versions through GitHub.",
-      result:
-        "Delivered a recruiter-friendly portfolio that turns my experience into a navigable product experience, improving clarity, differentiation, and storytelling beyond a traditional resume.",
-    },
-    recruiterWhy:
-      "Shows I understand how to package experience for impact, think in systems, and build real, usable products—not just talk about them.",
+    title: "AI Prompt Tutorial Concepts",
+    description:
+      "Simple AI learning experiences that teach non-technical users how to use AI tools for writing, planning, and career growth.",
+    impact: "Makes AI more practical, approachable, and outcome-driven.",
+    skills: ["AI Education", "Prompt Design", "Learning Design", "User Enablement"],
+    document: "AI-Prompt-Tutorial-Concepts.pdf",
   },
 ];
 
-const blogPosts = [
+const workExperiences = [
   {
-    id: "getting-started-learning-problem",
-    title: "Getting Started Is a Learning Problem, Not Just a Product Problem",
-    date: "Weekly Blog • Learning Strategy",
-    category: "Learning + Onboarding",
-    summary:
-      "What Azure Machine Learning and Microsoft AI Studio taught me about reducing information overload and helping users build confidence faster.",
-    intro:
-      "One thing I have learned from working on Azure Machine Learning and Microsoft AI Studio is that getting started is not just a product problem. It is a learning problem.",
-    paragraphs: [
-      "When someone opens a complex product for the first time, they are not only asking, where do I click? They are also asking, what matters first, what can I ignore for now, and how do I know I am doing this correctly?",
-      "I saw this when working on getting-started experiences, documentation, tutorials, and onboarding flows. Users did not always need more information. A lot of times, they needed a clearer path. They needed the product to reduce frustration, remove information overload, and respect that every person comes in with a different learning pattern and past experience.",
-      "That is why I care so much about guided learning, contextual help, sample tutorials, and clear entry points. These are not just support materials. They are part of the product experience. They help users build confidence, understand the workflow, and take action without feeling like they have to figure everything out alone.",
-      "My approach is simple: find where users slow down, listen to what they are confused about, define the learning gap, and then design the next step so it feels easier to move forward.",
-    ],
-    takeaway:
-      "If a user is stuck, the answer is not always to add more content. Sometimes the answer is to sequence the experience better so the user can build confidence one step at a time.",
+    title: "Microsoft AI Studio Homepage + Onboarding",
+    description:
+      "Helped improve the first-time user experience by clarifying onboarding paths, strengthening documentation connections, and reducing product confusion.",
+    impact: "Focused on helping users understand where to start and how to move forward with confidence.",
+    skills: ["Product Strategy", "Onboarding", "Docs Strategy", "Cross-functional Collaboration"],
+    document: "AI-Studio-Onboarding-Project.pdf",
   },
   {
-    id: "feedback-to-product-strategy",
-    title: "How Customer Feedback Becomes Product Strategy",
-    date: "Weekly Blog • Product Strategy",
-    category: "Customer Feedback",
-    summary:
-      "A reflection on turning interviews, competitive research, mockups, and validation into product decisions that actually matter.",
-    intro:
-      "Customer feedback is powerful, but only if you know how to turn it into a clear product decision.",
-    paragraphs: [
-      "When I worked on Email Notifications in Azure Machine Learning Studio, I learned how important it is to stay anchored on the customer problem.",
-      "The goal was not just to launch a feature. The goal was to help machine learning users receive important feedback about tasks they cared about during the machine learning process.",
-      "One lesson I took from that work is that feedback can become noisy fast. Different customers may want different things. Stakeholders may have different opinions. The job of a product strategist is to find the pattern, define the problem clearly, prioritize the highest-impact needs, and translate that into a roadmap or specification the team can build against.",
-      "This is also where measurement matters. When we know what outcome matters, it becomes easier to make better tradeoffs.",
-    ],
-    takeaway:
-      "Good product strategy is not collecting every request. It is turning the right customer evidence into a focused problem, a clear decision, and a measurable outcome.",
+    title: "AI Foundry Notification Center",
+    description:
+      "Led product planning for a centralized notification experience that helps users understand important product states and take action faster.",
+    impact: "Improves visibility, operational awareness, and user actionability inside the product.",
+    skills: ["Product Management", "Launch Planning", "Telemetry", "User Experience"],
+    document: "AI-Foundry-Notification-Center.pdf",
   },
   {
-    id: "hands-on-learning-product-thinking",
-    title: "Hands-On Learning Changed How I Think About Product Experiences",
-    date: "Weekly Blog • Growth Mindset",
-    category: "Hands-On Learning",
-    summary:
-      "Why using the product end-to-end helped me understand users, ask better questions, and design stronger learning experiences.",
-    intro:
-      "Earlier in my product career, I realized that reading about a product is not the same as learning it hands-on.",
-    paragraphs: [
-      "When I was ramping up on Azure Machine Learning, I spent time using sample notebooks, tutorials, Jupyter notebooks, Git Bash, Anaconda, SDK, CLI, and the user interface.",
-      "It also helped me build empathy. When you personally go through the steps, hit confusion, pause, reread documentation, and try again, you start to see where the experience needs more support.",
-      "That changed how I think about learning product strategy. I do not want to design from a distance. I want to use the product, understand the user journey, listen to customers, review telemetry, and then create experiences that make the next step clearer.",
-      "It also taught me that growth mindset is not just a nice phrase. It is part of how good product work happens. You learn, test, get feedback, adjust, and keep going until the experience becomes easier for the next person.",
-    ],
-    takeaway:
-      "The best learning experiences often come from doing the work yourself first, then turning that friction into better guidance for the user.",
+    title: "Scenario-Based Skill-Building Workshops",
+    description:
+      "Designed hands-on workshops that helped teams validate docs, identify product friction, and improve learning materials while the experience was fresh.",
+    impact: "Created a repeatable feedback loop between product usage, documentation, and user learning.",
+    skills: ["Workshop Design", "Learning Experience", "Research Synthesis", "Documentation"],
+    document: "Scenario-Based-Workshop-Strategy.pdf",
   },
 ];
 
-function Icon({ name, className = "" }) {
+const featuredSections = [
+  {
+    title: "Personal Portfolio",
+    description:
+      "A recruiter-facing collection of personal projects, business ideas, writing systems, and AI learning concepts.",
+    tag: "Portfolio Projects",
+    route: "personal-portfolio",
+  },
+  {
+    title: "Relevant Work Experiences",
+    description:
+      "Selected product and program management work across AI onboarding, documentation strategy, customer feedback, and launch readiness.",
+    tag: "Professional Experience",
+    route: "work-experience",
+  },
+];
+
+const blogs = [
+  "How I Think About Product Onboarding",
+  "Turning Career Wins into Strong Stories",
+  "What AI Product Work Taught Me About Clarity",
+];
+
+const navItems = ["home", "projects", "blogs", "resume", "contact"];
+const HERO_IMAGE = "/hero-graduation.png";
+
+function Icon({ name, size = 18, className = "" }) {
+  const icons = {
+    arrow: <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />,
+    download: (
+      <>
+        <path d="M12 3v12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <path d="M7 10l5 5 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M5 21h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      </>
+    ),
+    mail: (
+      <>
+        <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="2" fill="none" />
+        <path d="M4 7l8 6 8-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </>
+    ),
+    external: (
+      <>
+        <path d="M14 4h6v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M10 14L20 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <path d="M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      </>
+    ),
+    briefcase: (
+      <>
+        <rect x="3" y="7" width="18" height="13" rx="2" stroke="currentColor" strokeWidth="2" fill="none" />
+        <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <path d="M3 12h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      </>
+    ),
+    pen: (
+      <>
+        <path d="M4 20l4-1 11-11a2.8 2.8 0 0 0-4-4L4 15l-1 4a1 1 0 0 0 1 1z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        <path d="M13 5l4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      </>
+    ),
+  };
+
   return (
-    <span
-      aria-hidden="true"
-      className={`inline-flex shrink-0 items-center justify-center font-bold leading-none ${className}`}
-    >
-      {ICONS[name] || "•"}
-    </span>
+    <svg aria-hidden="true" viewBox="0 0 24 24" width={size} height={size} className={className} fill="none">
+      {icons[name] || icons.arrow}
+    </svg>
   );
 }
 
-function runClickthroughTests() {
-  const requiredIcons = [
-    "arrowRight",
-    "barChart",
-    "book",
-    "briefcase",
-    "chevronRight",
-    "download",
-    "file",
-    "mail",
-    "menu",
-    "shield",
-    "sparkles",
-    "target",
-    "users",
-    "x",
-  ];
-  const missingIcons = requiredIcons.filter((name) => !ICONS[name]);
-  const missingViews = VIEWS.filter((view) => !view);
 
-  return {
-    validViewsPass: missingViews.length === 0,
-    iconsPass: missingIcons.length === 0,
-    contactInfoPass: CONTACT_EMAIL.includes("@") && LINKEDIN_URL.includes("linkedin.com/in/"),
-    missingIcons,
-    missingViews,
-  };
-}
 
 export default function App() {
-  const [view, setView] = useState("home");
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [selectedProjectId, setSelectedProjectId] = useState("ai-studio-homepage-docs");
-  const [selectedBlogId, setSelectedBlogId] = useState("getting-started-learning-problem");
-  const testResults = useMemo(() => runClickthroughTests(), []);
+  const [page, setPage] = useState("home");
+  
 
-  const navItems = [
-    ["About", "home", "about-section"],
-    ["Learning Strategy", "home", "learning-strategy-section"],
-    ["Projects", "home", "featured-work"],
-    ["Blog", "blog", null],
-    ["Resume", "resume", null],
-    ["Contact", "contact", null],
-  ];
-
-  function goTo(target) {
-    if (!VIEWS.includes(target)) return;
-    setView(target);
-    setMobileOpen(false);
-    if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  function openProject(projectId) {
-    setSelectedProjectId(projectId);
-    setView("projectDetail");
-    setMobileOpen(false);
-    if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  function scrollToSection(sectionId) {
-    if (!sectionId) return;
-    const scroll = () => {
-      const section = document.getElementById(sectionId);
-      if (section) section.scrollIntoView({ behavior: "smooth", block: "start" });
-    };
-    if (view !== "home") {
-      setView("home");
-      setMobileOpen(false);
-      setTimeout(scroll, 80);
-      return;
-    }
-    setMobileOpen(false);
-    scroll();
-  }
-
-  function handleNavClick(target, sectionId) {
-    if (sectionId) return scrollToSection(sectionId);
-    goTo(target);
-  }
-
-  function Header() {
-    return (
-      <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/90 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
-          <button
-            type="button"
-            onClick={() => goTo("home")}
-            className="font-serif text-3xl font-black tracking-tight text-[#6C4EF6]"
-          >
-            KW
+  return (
+    <div className="min-h-screen bg-[#F8F5EF] text-[#172033]">
+      <header className="sticky top-0 z-50 border-b border-[#D9CBB4] bg-[#F8F5EF]/95 backdrop-blur">
+        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-4 md:flex-row md:items-center md:justify-between">
+          <button onClick={() => setPage("home")} className="rounded-xl text-left focus:outline-none focus:ring-4 focus:ring-[#C9974A]/40">
+            <p className="text-sm uppercase tracking-[0.25em] text-[#5C6472]">Portfolio</p>
+            <h1 className="text-lg font-semibold text-[#172033]">Keneisha Wiggan</h1>
           </button>
 
-          <nav className="hidden items-center gap-6 md:flex" aria-label="Main navigation">
-            {navItems.map(([label, target, sectionId]) => (
+          <nav className="flex w-full overflow-hidden rounded-2xl border border-[#D9CBB4] bg-white shadow-sm md:w-auto">
+            {navItems.map((item) => (
               <button
-                key={label}
-                type="button"
-                onClick={() => handleNavClick(target, sectionId)}
-                className="text-sm font-semibold text-slate-600 transition hover:text-[#6C4EF6]"
+                key={item}
+                onClick={() => setPage(item)}
+                className={`flex-1 border-r border-[#E8DDCA] px-3 py-3 text-sm font-semibold capitalize last:border-r-0 hover:bg-[#F1E7D7] focus:outline-none focus:ring-4 focus:ring-[#C9974A]/40 md:flex-none md:px-4 ${
+                  page === item ? "bg-[#18324A] text-white hover:bg-[#18324A]" : "text-[#172033]"
+                }`}
               >
-                {label}
+                {item}
               </button>
             ))}
-            <button
-              type="button"
-              onClick={() => goTo("resume")}
-              className="inline-flex items-center gap-2 rounded-full bg-[#6C4EF6] px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-indigo-200 transition hover:-translate-y-0.5 hover:bg-[#5638D8]"
-            >
-              View Resume <Icon name="file" className="h-4 w-4" />
-            </button>
           </nav>
-
-          <button
-            type="button"
-            onClick={() => setMobileOpen((current) => !current)}
-            className="rounded-xl border border-slate-200 bg-white p-2 md:hidden"
-            aria-label="Toggle mobile menu"
-          >
-            <Icon name={mobileOpen ? "x" : "menu"} className="h-5 w-5" />
-          </button>
         </div>
-
-        {mobileOpen && (
-          <nav className="border-t border-slate-200 bg-white px-6 py-4 md:hidden" aria-label="Mobile navigation">
-            <div className="flex flex-col gap-4">
-              {navItems.map(([label, target, sectionId]) => (
-                <button
-                  key={label}
-                  type="button"
-                  onClick={() => handleNavClick(target, sectionId)}
-                  className="text-left text-sm font-bold text-slate-700"
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-          </nav>
-        )}
       </header>
-    );
-  }
 
-  function Footer() {
-    return (
-      <footer className="bg-[#0B1D3A] text-white">
-        <div className="mx-auto grid max-w-7xl gap-8 px-6 py-12 lg:grid-cols-[1.2fr_1fr] lg:px-8">
-          <div>
-            <h2 className="font-serif text-3xl font-bold">Let&apos;s build better experiences</h2>
-            <p className="mt-3 max-w-md text-sm leading-7 text-white/75">
-              I&apos;m passionate about helping teams deliver learning products that build confidence, support skill mastery, and create measurable outcomes.
-            </p>
-          </div>
-          <div className="space-y-3 text-sm text-white/80 lg:justify-self-end">
-            <p className="flex items-center gap-3">
-              <Icon name="mail" className="h-4 w-4" /> {CONTACT_EMAIL}
-            </p>
-            <p className="flex items-center gap-3">
-              <span className="grid h-4 w-4 place-items-center rounded bg-sky-500 text-[10px] font-black">in</span>
-              {LINKEDIN_URL}
-            </p>
-          </div>
-        </div>
-        <p className="border-t border-white/10 py-5 text-center text-xs text-white/55">
-          © 2026 Keneisha Wiggan. All rights reserved.
-        </p>
-      </footer>
-    );
-  }
-
-  function TestStatus() {
-    if (testResults.validViewsPass && testResults.iconsPass && testResults.contactInfoPass) return null;
-    return (
-      <div className="border-b border-amber-200 bg-amber-50 px-6 py-3 text-sm text-amber-900">
-        Test warning: check views, icons, or contact info.
-      </div>
-    );
-  }
-
-  function Shell({ children }) {
-    return (
-      <div className="min-h-screen bg-[#FBFAFF] text-[#0B1D3A]">
-        <Header />
-        <TestStatus />
-        {children}
-        <Footer />
-      </div>
-    );
-  }
-
-  function SectionHeading({ title, body }) {
-    return (
-      <div className="mx-auto max-w-3xl text-center">
-        <h2 className="font-serif text-4xl font-black tracking-tight">{title}</h2>
-        <p className="mt-3 text-slate-600">{body}</p>
-      </div>
-    );
-  }
-
-  function IconCard({ icon, title, body }) {
-    return (
-      <div className="rounded-[1.5rem] border border-slate-200 bg-white p-6 shadow-sm">
-        <div className="mb-4 grid h-11 w-11 place-items-center rounded-full bg-[#EDE9FF] font-black text-[#6C4EF6]">
-          {icon}
-        </div>
-        <h3 className="font-bold">{title}</h3>
-        <p className="mt-2 text-sm leading-6 text-slate-600">{body}</p>
-      </div>
-    );
-  }
-
-  function CapabilityCard({ iconName, title, body }) {
-    return (
-      <div className="rounded-[1.5rem] border border-slate-200 bg-white p-7 shadow-sm">
-        <div className="mb-5 inline-flex rounded-full bg-[#EDE9FF] p-3 text-[#6C4EF6]">
-          <Icon name={iconName} className="h-5 w-5" />
-        </div>
-        <h3 className="font-bold">{title}</h3>
-        <p className="mt-3 text-sm leading-6 text-slate-600">{body}</p>
-      </div>
-    );
-  }
-
-  function ProjectDetailPage() {
-    const project = projects.find((item) => item.id === selectedProjectId) || projects[0];
-    const starRows = [
-      ["Situation", project.star.situation],
-      ["Task", project.star.task],
-      ["Action", project.star.action],
-      ["Result", project.star.result],
-    ];
-
-    return (
-      <Shell>
-        <section className="bg-gradient-to-br from-white via-[#FBFAFF] to-[#EEF5FF]">
-          <div className="mx-auto max-w-5xl px-6 py-14 lg:px-8">
-            <div className="mb-6 flex flex-wrap items-center gap-2 text-sm font-semibold text-slate-500">
-              <button type="button" onClick={() => scrollToSection("featured-work")} className="text-[#6C4EF6] hover:underline">
-                Projects
-              </button>
-              <Icon name="chevronRight" className="h-4 w-4" />
-              <span>{project.label}</span>
-            </div>
-
-            <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-[0_25px_80px_-30px_rgba(15,31,61,0.28)] md:p-10">
-              <div className="inline-flex items-center gap-2 rounded-full bg-[#EDE9FF] px-4 py-2 text-sm font-bold text-[#6C4EF6]">
-                <Icon name={project.id === "keneisha-portfolio" ? "sparkles" : "briefcase"} className="h-4 w-4" />
-                {project.category}
-              </div>
-              <h1 className="mt-6 max-w-4xl font-serif text-4xl font-black leading-[1.08] tracking-tight sm:text-5xl">
-                {project.title}
-              </h1>
-              <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-700">{project.summary}</p>
-
-              <div className="mt-8 flex flex-wrap gap-3">
-                {project.skillTags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full bg-[#F8F6FF] px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-[#6C4EF6]"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <button
-                  type="button"
-                  onClick={() => scrollToSection("featured-work")}
-                  className="rounded-2xl border border-indigo-200 bg-white px-6 py-3 text-sm font-bold text-[#6C4EF6] shadow-sm transition hover:-translate-y-0.5"
-                >
-                  ← Back to Projects
-                </button>
-                <button
-                  type="button"
-                  onClick={() => goTo("contact")}
-                  className="rounded-2xl bg-[#6C4EF6] px-6 py-3 text-sm font-bold text-white shadow-lg shadow-indigo-200 transition hover:-translate-y-0.5"
-                >
-                  Contact Me
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="mx-auto max-w-5xl px-6 py-12 lg:px-8">
-          <div className="rounded-[1.5rem] border border-slate-200 bg-white p-7 shadow-sm">
-            <p className="text-sm font-black uppercase tracking-[0.2em] text-[#6C4EF6]">STAR case study</p>
-            <h2 className="mt-3 font-serif text-3xl font-bold">A simple recruiter-friendly story of the project.</h2>
-            <div className="mt-6 grid gap-4 md:grid-cols-2">
-              {starRows.map(([label, body]) => (
-                <div key={label} className="rounded-2xl bg-[#F8F6FF] p-5">
-                  <h3 className="font-bold text-[#0B1D3A]">{label}</h3>
-                  <p className="mt-2 text-sm leading-7 text-slate-700">{body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-6 rounded-[1.5rem] border border-indigo-100 bg-gradient-to-r from-[#EDE9FF] via-white to-[#E6F0FF] p-7">
-            <p className="text-sm font-black uppercase tracking-[0.2em] text-[#6C4EF6]">
-              Why you as a recruiter should care
-            </p>
-            <h2 className="mt-3 font-serif text-2xl font-bold">{project.recruiterWhy}</h2>
-          </div>
-        </section>
-      </Shell>
-    );
-  }
-
-  function BlogPage() {
-    return (
-      <Shell>
-        <section className="bg-gradient-to-br from-white via-[#FBFAFF] to-[#EEF5FF]">
-          <div className="mx-auto max-w-5xl px-6 py-16 lg:px-8">
-            <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-[0_25px_80px_-30px_rgba(15,31,61,0.28)] md:p-10">
-              <div className="inline-flex items-center gap-2 rounded-full bg-[#EDE9FF] px-4 py-2 text-sm font-bold text-[#6C4EF6]">
-                <Icon name="book" className="h-4 w-4" /> Weekly blog
-              </div>
-              <h1 className="mt-6 max-w-4xl font-serif text-4xl font-black leading-[1.08] tracking-tight sm:text-5xl">
-                Writing from the way I actually work
-              </h1>
-              <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-700">
-                These posts are based on what I have learned from onboarding, documentation, customer feedback, product launches, and hands-on work in Azure Machine Learning and Microsoft AI Studio.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="mx-auto max-w-5xl px-6 py-12 lg:px-8">
-          <div className="grid gap-6 md:grid-cols-3">
-            {blogPosts.map((post) => (
-              <button
-                key={post.id}
-                type="button"
-                onClick={() => {
-                  setSelectedBlogId(post.id);
-                  goTo("blogPost");
-                }}
-                className="group rounded-[1.5rem] border border-slate-200 bg-white p-6 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
-              >
-                <p className="text-xs font-black uppercase tracking-[0.18em] text-[#6C4EF6]">{post.category}</p>
-                <h3 className="mt-3 text-xl font-black leading-7">{post.title}</h3>
-                <p className="mt-2 text-xs font-semibold text-slate-400">{post.date}</p>
-                <p className="mt-4 text-sm leading-6 text-slate-600">{post.summary}</p>
-                <span className="mt-5 inline-flex items-center gap-2 text-sm font-black text-[#6C4EF6]">
-                  Read Post <Icon name="arrowRight" className="h-4 w-4 transition group-hover:translate-x-1" />
-                </span>
-              </button>
-            ))}
-          </div>
-        </section>
-      </Shell>
-    );
-  }
-
-  function BlogPostPage() {
-    const post = blogPosts.find((item) => item.id === selectedBlogId) || blogPosts[0];
-    return (
-      <Shell>
-        <article className="mx-auto max-w-3xl px-6 py-16 lg:px-8">
-          <button
-            type="button"
-            onClick={() => goTo("blog")}
-            className="mb-8 rounded-2xl border border-indigo-200 bg-white px-5 py-3 text-sm font-bold text-[#6C4EF6]"
-          >
-            ← Back to Blog
-          </button>
-          <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-[0_25px_80px_-30px_rgba(15,31,61,0.28)] md:p-10">
-            <p className="text-sm font-black uppercase tracking-[0.2em] text-[#6C4EF6]">{post.category}</p>
-            <h1 className="mt-4 font-serif text-4xl font-black leading-tight tracking-tight">{post.title}</h1>
-            <p className="mt-3 text-sm font-semibold text-slate-400">{post.date}</p>
-            <div className="mt-8 space-y-6 text-base leading-8 text-slate-700">
-              <p className="text-lg font-semibold leading-8 text-[#0B1D3A]">{post.intro}</p>
-              {post.paragraphs.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
-              <div className="rounded-[1.5rem] bg-[#F8F6FF] p-6">
-                <h2 className="font-serif text-2xl font-bold text-[#0B1D3A]">Practical takeaway</h2>
-                <p className="mt-3 text-sm leading-7">{post.takeaway}</p>
-              </div>
-            </div>
-          </div>
-        </article>
-      </Shell>
-    );
-  }
-
-  function ResumePage() {
-    const resumeCards = [
-      ["Learning Experience Design", "Designed onboarding, tutorials, documentation navigation, contextual help, and guided learning experiences."],
-      ["Learning Product Strategy", "Translated learner/user needs, research, and product data into roadmap decisions and measurable improvements."],
-      ["Behavioral Engagement", "Designed experiences that reduce friction, build momentum, and help users continue toward meaningful actions."],
-      ["Cross-Functional Delivery", "Partnered across engineering, design, documentation, customer support, and stakeholders."],
-    ];
-
-    return (
-      <Shell>
-        <section className="mx-auto max-w-5xl px-6 py-16 lg:px-8">
-          <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-[0_25px_80px_-30px_rgba(15,31,61,0.35)]">
-            <div className="flex flex-col gap-6 border-b border-slate-200 pb-8 md:flex-row md:items-start md:justify-between">
-              <div>
-                <p className="text-sm font-black uppercase tracking-[0.2em] text-[#6C4EF6]">Resume Preview</p>
-                <h1 className="mt-3 font-serif text-5xl font-black tracking-tight">Keneisha Wiggan</h1>
-                <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-700">
-                  Learning product strategist and program manager with experience designing learning and onboarding experiences that help users build confidence, master skills, and reach measurable outcomes.
-                </p>
-              </div>
-              <a
-                href={RESUME_PDF_PATH}
-                download
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#6C4EF6] px-6 py-3 text-sm font-bold text-white shadow-lg"
-              >
-                Download PDF <Icon name="download" className="h-4 w-4" />
-              </a>
-            </div>
-            <div className="mt-8 grid gap-5 md:grid-cols-2">
-              {resumeCards.map(([title, body]) => (
-                <div key={title} className="rounded-[1.5rem] border border-slate-200 bg-[#FBFAFF] p-6">
-                  <h3 className="font-bold">{title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-slate-600">{body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      </Shell>
-    );
-  }
-
-  function ContactPage() {
-    return (
-      <Shell>
-        <section className="mx-auto max-w-3xl px-6 py-16 text-center lg:px-8">
-          <div className="rounded-[2rem] border border-slate-200 bg-white p-10 shadow-[0_25px_80px_-30px_rgba(15,31,61,0.35)]">
-            <div className="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-full bg-[#EDE9FF] text-[#6C4EF6]">
-              <Icon name="mail" className="h-7 w-7" />
-            </div>
-            <h1 className="font-serif text-4xl font-black tracking-tight">Contact</h1>
-            <div className="mt-8 space-y-4">
-              <a href={`mailto:${CONTACT_EMAIL}`} className="block rounded-2xl bg-[#6C4EF6] px-6 py-4 text-sm font-bold text-white shadow-lg">
-                {CONTACT_EMAIL}
-              </a>
-              <a
-                href={`https://${LINKEDIN_URL}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block rounded-2xl border border-indigo-200 bg-white px-6 py-4 text-sm font-bold text-[#6C4EF6]"
-              >
-                View LinkedIn
-              </a>
-            </div>
-          </div>
-        </section>
-      </Shell>
-    );
-  }
-
-  function HomePage() {
-    const stats = [
-      ["5+", "Years Experience", "Leading programs and driving impact across AI and learning product experiences."],
-      ["▦", "Microsoft AI Products", "Microsoft AI Foundry, Microsoft AI Studio, and Azure Machine Learning Studio."],
-      ["👥", "Learning + Onboarding", "Helping users build confidence, understand workflows, and reach first value."],
-      ["☷", "Cross-Functional Leadership", "Partnering across product, engineering, design, and documentation."],
-    ];
-
-    const capabilities = [
-      ["book", "Learning Model Translation", "I translate complex workflows into clear learning journeys, tutorials, guidance, and skill-building experiences."],
-      ["users", "Behavioral Engagement", "I design experiences that reduce friction, build momentum, and help users continue toward meaningful actions."],
-      ["target", "Learning Product Strategy", "I connect learner needs, business goals, research, and product strategy to shape scalable experiences."],
-      ["barChart", "Measurement & Outcomes", "I define success signals that show whether users are discovering, understanding, adopting, and applying the product."],
-    ];
-
-    const strengths = [
-      ["briefcase", "Program Manager", "Strategic • Organized • Results-driven"],
-      ["sparkles", "AI Product Strategist", "Microsoft AI Foundry, Microsoft AI Studio, and Azure Machine Learning Studio"],
-      ["book", "Learning Product Strategist", "Designing for confidence, skill mastery, engagement, and outcomes"],
-      ["users", "People-Centered", "Empowering users. Driving adoption. Delivering impact."],
-    ];
-
-    const featuredWork = [
-      ...projects.filter((p) => ["ai-studio-homepage-docs", "ai-studio-tutorials", "workspace-landing-page"].includes(p.id)),
-      ...projects.filter((p) => !["ai-studio-homepage-docs", "ai-studio-tutorials", "workspace-landing-page"].includes(p.id)),
-    ];
-
-    const blogTopics = [
-      "Designing learning experiences that build confidence",
-      "Using AI to prototype learning products",
-      "Measuring skill progression and adoption",
-      "Turning career experience into professional stories",
-    ];
-
-    return (
-      <Shell>
-        <section className="relative overflow-hidden bg-gradient-to-b from-white via-[#FBFAFF] to-[#F8FBFF]">
-          <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-16 lg:grid-cols-[1fr_0.95fr] lg:px-8 lg:py-20">
-            <div>
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-white px-4 py-2 text-sm font-bold text-[#6C4EF6] shadow-sm">
-                <Icon name="sparkles" className="h-4 w-4" />
-                Product Strategy • Behavioral Engagement • Onboarding & Skill-Building Experiences
-              </div>
-              <h1 className="max-w-3xl font-serif text-6xl font-black leading-[1.02] tracking-tight sm:text-7xl">
-                Keneisha Wiggan
-              </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-700">
-                I design product and experiences that help users build confidence, master skills, and reach measurable outcomes. I blend learning strategy, product thinking, behavioral engagement, and AI product experience to create scalable user journeys.
-              </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <button
-                  type="button"
-                  onClick={() => scrollToSection("featured-work")}
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#6C4EF6] px-6 py-4 text-base font-black text-white shadow-xl shadow-indigo-200 transition hover:scale-[1.01]"
-                >
-                  Explore My Work <Icon name="arrowRight" className="h-4 w-4" />
-                </button>
-                <a
-                  href={RESUME_PDF_PATH}
-                  download
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-indigo-200 bg-white px-6 py-4 text-base font-black text-[#6C4EF6] shadow-sm transition hover:bg-slate-50"
-                >
-                  Download Resume <Icon name="download" className="h-4 w-4" />
-                </a>
-              </div>
-            </div>
-
-            <div className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-[0_30px_90px_-30px_rgba(15,31,61,0.35)]">
-              <div className="grid gap-5 lg:grid-cols-[0.9fr_1fr]">
-                <div className="flex min-h-[340px] items-center justify-center rounded-[1.5rem] bg-gradient-to-br from-[#DCCFFF] to-[#E6F0FF] p-6">
-                  <img
-                    src={HEADSHOT_PATH}
-                    alt="Keneisha Wiggan professional headshot"
-                    className="h-64 w-64 rounded-full border-8 border-white/80 object-cover object-top shadow-xl"
-                  />
-                </div>
-                <div className="grid gap-4">
-                  {strengths.map(([iconName, title, body]) => (
-                    <div key={title} className="flex gap-3 rounded-2xl p-2">
-                      <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#EDE9FF] text-[#6C4EF6]">
-                        <Icon name={iconName} className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <h3 className="font-bold">{title}</h3>
-                        <p className="text-sm leading-6 text-slate-600">{body}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="mx-auto grid max-w-7xl gap-5 px-6 pb-12 md:grid-cols-4 lg:px-8">
-            {stats.map(([icon, title, body]) => (
-              <IconCard key={title} icon={icon} title={title} body={body} />
-            ))}
-          </div>
-        </section>
-
-        <section id="learning-strategy-section" className="mx-auto max-w-7xl scroll-mt-28 px-6 py-16 lg:px-8">
-          <SectionHeading
-            title="What I Bring"
-            body="A recruiter-friendly snapshot of how I approach learning product strategy, behavioral engagement, and measurable user outcomes."
+      <main className="mx-auto max-w-6xl px-5 py-10">
+        {page === "home" && <Home setPage={setPage} />}
+        {page === "projects" && <Projects setPage={setPage} />}
+        {page === "personal-portfolio" && (
+          <DetailCollection
+            eyebrow="Personal Portfolio"
+            title="Portfolio projects"
+            intro="These projects show how I translate ideas into clear experiences, products, and career storytelling systems."
+            items={portfolioProjects}
+            back={() => setPage("projects")}
           />
-          <div className="mt-10 grid gap-6 md:grid-cols-4">
-            {capabilities.map(([iconName, title, body]) => (
-              <CapabilityCard key={title} iconName={iconName} title={title} body={body} />
-            ))}
-          </div>
-        </section>
+        )}
+        {page === "work-experience" && (
+          <DetailCollection
+            eyebrow="Relevant Work Experience"
+            title="Professional experience highlights"
+            intro="These examples show the product, program, AI onboarding, and learning experience work that recruiters can quickly review."
+            items={workExperiences}
+            back={() => setPage("projects")}
+          />
+        )}
+        {page === "blogs" && <Blogs />}
+        {page === "resume" && <Resume />}
+        {page === "contact" && <Contact />}
+      </main>
+    </div>
+  );
+}
 
-        <section id="featured-work" className="scroll-mt-28 bg-white py-16">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <SectionHeading title="Featured Work" body="Click a card to open a project page and see the portfolio clickthrough experience." />
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {featuredWork.map(({ id, title, summary, category, label }) => (
-                <button
-                  key={id}
-                  type="button"
-                  onClick={() => openProject(id)}
-                  className="group overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white text-left shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
-                >
-                  <div className="h-44 bg-gradient-to-br from-[#6C4EF6] via-[#DCCFFF] to-[#E6F0FF] p-6">
-                    <div className="flex h-full items-center justify-center rounded-2xl bg-white/75 text-center shadow-sm">
-                      <span className="rounded-full bg-[#F8F6FF] px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-[#6C4EF6]">
-                        {label}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <p className="text-xs font-black uppercase tracking-[0.16em] text-[#6C4EF6]">{category}</p>
-                    <h3 className="mt-2 text-xl font-black">{title}</h3>
-                    <p className="mt-3 text-sm leading-6 text-slate-600">{summary}</p>
-                    <span className="mt-5 inline-flex items-center gap-2 text-sm font-black text-[#6C4EF6]">
-                      View Project <Icon name="arrowRight" className="h-4 w-4 transition group-hover:translate-x-1" />
-                    </span>
-                  </div>
-                </button>
-              ))}
+function Home({ setPage }) {
+  return (
+    <div className="space-y-16">
+      <section className="grid items-center gap-10 py-8 md:grid-cols-2">
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+          <div>
+            <h2 className="text-5xl font-bold tracking-tight text-[#172033] md:text-6xl">Keneisha Wiggan</h2>
+          </div>
+
+          <p className="max-w-xl text-lg leading-8 text-[#3E4858]">
+            I help teams organize projects, improve processes, coordinate cross-functional work, and deliver meaningful outcomes through strong communication, planning, and execution.
+          </p>
+
+          <div className="flex flex-wrap gap-3">
+            <button
+              onClick={() => setPage("projects")}
+              className="flex items-center gap-2 rounded-2xl bg-[#18324A] px-5 py-3 font-semibold text-white shadow-sm hover:bg-[#0F2538] focus:outline-none focus:ring-4 focus:ring-[#C9974A]/50"
+            >
+              Explore my work <Icon name="arrow" />
+            </button>
+            <button
+              onClick={() => setPage("resume")}
+              className="flex items-center gap-2 rounded-2xl border border-[#B88A44] bg-white px-5 py-3 font-semibold text-[#172033] shadow-sm hover:bg-[#F1E7D7] focus:outline-none focus:ring-4 focus:ring-[#C9974A]/40"
+            >
+              Download resume <Icon name="download" />
+            </button>
+          </div>
+        </motion.div>
+
+        <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} className="relative">
+          <div className="aspect-[4/3] rounded-[2rem] border border-[#D9CBB4] bg-white p-4 shadow-xl">
+            <div className="h-full overflow-hidden rounded-[1.5rem] bg-[#E9E2D4]">
+              <img
+                src={HERO_IMAGE}
+                alt="Keneisha Wiggan graduation portrait"
+                className="h-full w-full object-cover object-center"
+              />
             </div>
           </div>
-        </section>
+        </motion.div>
+      </section>
 
-        <section id="about-section" className="mx-auto max-w-7xl scroll-mt-28 px-6 py-16 lg:px-8">
-          <div className="grid gap-8 rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-            <div>
-              <p className="text-sm font-black uppercase tracking-[0.2em] text-[#6C4EF6]">Weekly Blog</p>
-              <h2 className="mt-3 font-serif text-4xl font-black tracking-tight">Thoughts on learning, AI, and product strategy</h2>
-              <p className="mt-4 text-sm leading-7 text-slate-600">
-                A place to publish weekly posts that show how I think about adult learning, behavioral engagement, skill-building, and measurable learning outcomes.
-              </p>
-              <button
-                type="button"
-                onClick={() => goTo("blog")}
-                className="mt-6 rounded-2xl bg-[#6C4EF6] px-6 py-3 text-sm font-bold text-white shadow-lg shadow-indigo-200 transition hover:-translate-y-0.5"
-              >
-                Visit Blog
+      <FeaturedWork setPage={setPage} />
+
+      <section className="rounded-[2rem] border border-[#D9CBB4] bg-white p-6 shadow-sm">
+        <div className="mb-5 flex items-center gap-3 text-[#18324A]">
+          <Icon name="pen" size={24} />
+          <h3 className="text-3xl font-bold text-[#172033]">Blogs</h3>
+        </div>
+        <div className="grid gap-4 md:grid-cols-3">
+          {blogs.map((blog) => (
+            <article key={blog} className="rounded-3xl border border-[#E8DDCA] bg-[#F8F5EF] p-5">
+              <p className="text-sm font-semibold text-[#7C4A18]">Coming soon</p>
+              <h4 className="mt-2 font-semibold text-[#172033]">{blog}</h4>
+            </article>
+          ))}
+        </div>
+
+        <button
+          onClick={() => setPage("blogs")}
+          className="mt-6 flex items-center gap-2 rounded-2xl bg-[#18324A] px-5 py-3 font-semibold text-white hover:bg-[#0F2538] focus:outline-none focus:ring-4 focus:ring-[#C9974A]/50"
+        >
+          Visit blogs page <Icon name="arrow" />
+        </button>
+      </section>
+    </div>
+  );
+}
+
+function FeaturedWork({ setPage }) {
+  return (
+    <section className="rounded-[2rem] border border-[#D9CBB4] bg-white p-6 shadow-sm">
+      <div className="mb-6">
+        <h3 className="mt-2 text-3xl font-bold text-[#172033]">Portfolio highlights</h3>
+      </div>
+
+      <div className="grid gap-5 md:grid-cols-2">
+        {featuredSections.map((project) => (
+          <button
+            key={project.title}
+            onClick={() => setPage(project.route)}
+            className="group rounded-3xl border border-[#D9CBB4] bg-[#F8F5EF] p-6 text-left shadow-sm transition hover:-translate-y-1 hover:border-[#B88A44] hover:bg-[#F1E7D7] hover:shadow-md focus:outline-none focus:ring-4 focus:ring-[#C9974A]/40"
+          >
+            <p className="mb-4 inline-flex rounded-full bg-[#18324A] px-3 py-1 text-sm font-semibold text-white shadow-sm">
+              {project.tag}
+            </p>
+            <h4 className="text-2xl font-bold text-[#172033]">{project.title}</h4>
+            <p className="mt-3 leading-7 text-[#3E4858]">{project.description}</p>
+            <span className="mt-5 flex items-center gap-2 font-bold text-[#7C4A18]">
+              View details <Icon name="external" size={16} />
+            </span>
+          </button>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Projects({ setPage }) {
+  return (
+    <PageShell eyebrow="Projects" title="Explore my work">
+      <FeaturedWork setPage={setPage} />
+    </PageShell>
+  );
+}
+
+function DetailCollection({ eyebrow, title, intro, items, back }) {
+  return (
+    <PageShell eyebrow={eyebrow} title={title}>
+      <div className="rounded-[2rem] border border-[#D9CBB4] bg-white p-6 shadow-sm">
+        <button
+          onClick={back}
+          className="mb-6 flex items-center gap-2 rounded-2xl border border-[#B88A44] bg-white px-4 py-2 font-semibold text-[#172033] hover:bg-[#F1E7D7] focus:outline-none focus:ring-4 focus:ring-[#C9974A]/40"
+        >
+          ← Back to projects
+        </button>
+        <p className="max-w-3xl text-lg leading-8 text-[#3E4858]">{intro}</p>
+      </div>
+
+      <div className="grid gap-5 md:grid-cols-3">
+        {items.map((item) => (
+          <article key={item.title} className="rounded-3xl border border-[#D9CBB4] bg-white p-6 shadow-sm">
+            <Icon name="briefcase" size={26} className="mb-4 text-[#18324A]" />
+            <h3 className="text-2xl font-bold text-[#172033]">{item.title}</h3>
+            <p className="mt-3 leading-7 text-[#3E4858]">{item.description}</p>
+            <div className="mt-5 rounded-2xl bg-[#F1E7D7] p-4">
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#7C4A18]">Impact</p>
+              <p className="mt-2 text-[#172033]">{item.impact}</p>
+            </div>
+            <div className="mt-5 rounded-2xl border border-[#D9CBB4] bg-[#F8F5EF] p-4">
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#7C4A18]">Attached walkthrough</p>
+              <button className="mt-3 flex items-center gap-2 rounded-xl bg-[#18324A] px-4 py-2 font-semibold text-white hover:bg-[#0F2538] focus:outline-none focus:ring-4 focus:ring-[#C9974A]/50">
+                View {item.document} <Icon name="external" size={16} />
               </button>
             </div>
-            <div className="grid gap-4 md:grid-cols-2">
-              {blogTopics.map((topic) => (
-                <div key={topic} className="rounded-2xl bg-[#F8F6FF] p-5 text-sm font-semibold leading-6 text-slate-700">
-                  ✓ {topic}
-                </div>
+
+            <div className="mt-5 flex flex-wrap gap-2">
+              {item.skills.map((skill) => (
+                <span key={skill} className="rounded-full border border-[#D9CBB4] bg-[#F8F5EF] px-3 py-1 text-sm font-medium text-[#3E4858]">
+                  {skill}
+                </span>
               ))}
             </div>
-          </div>
-        </section>
-      </Shell>
-    );
-  }
-
-  if (view === "projectDetail") return <ProjectDetailPage />;
-  if (view === "blog") return <BlogPage />;
-  if (view === "blogPost") return <BlogPostPage />;
-  if (view === "resume") return <ResumePage />;
-  if (view === "contact") return <ContactPage />;
-  return <HomePage />;
+          </article>
+        ))}
+      </div>
+    </PageShell>
+  );
 }
+
+function Blogs() {
+  return (
+    <PageShell eyebrow="Blogs" title="Writing and reflections">
+      <div className="space-y-4">
+        {blogs.map((blog) => (
+          <div key={blog} className="rounded-3xl border border-[#D9CBB4] bg-white p-6 shadow-sm">
+            <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#7C4A18]">Coming soon</p>
+            <h3 className="mt-2 text-2xl font-bold text-[#172033]">{blog}</h3>
+          </div>
+        ))}
+      </div>
+    </PageShell>
+  );
+}
+
+function Resume() {
+  return (
+    <PageShell eyebrow="Resume" title="Download resume">
+      <div className="rounded-3xl border border-[#D9CBB4] bg-white p-8 shadow-sm">
+        <p className="max-w-2xl leading-7 text-[#3E4858]">
+          This page is where your downloadable resume will live. In the real website, this button should connect to the resume PDF in your public folder.
+        </p>
+        <button className="mt-6 flex items-center gap-2 rounded-2xl bg-[#18324A] px-5 py-3 font-semibold text-white hover:bg-[#0F2538] focus:outline-none focus:ring-4 focus:ring-[#C9974A]/50">
+          Download resume <Icon name="download" />
+        </button>
+      </div>
+    </PageShell>
+  );
+}
+
+function Contact() {
+  return (
+    <PageShell eyebrow="Contact" title="Let’s connect">
+      <div className="rounded-3xl border border-[#D9CBB4] bg-white p-8 shadow-sm">
+        <Icon name="mail" size={28} className="mb-4 text-[#18324A]" />
+
+        <div className="mt-8 space-y-5">
+          <div className="rounded-2xl border border-[#D9CBB4] bg-[#F8F5EF] p-5">
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#7C4A18]">Email</p>
+            <a
+              href="mailto:Keneishawiggan8@gmail.com"
+              className="mt-2 inline-flex items-center gap-2 rounded-lg text-lg font-semibold text-[#18324A] underline-offset-4 hover:underline focus:outline-none focus:ring-4 focus:ring-[#C9974A]/40"
+            >
+              Keneishawiggan8@gmail.com
+            </a>
+          </div>
+
+          <div className="rounded-2xl border border-[#D9CBB4] bg-[#F8F5EF] p-5">
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#7C4A18]">LinkedIn</p>
+            <a
+              href="https://www.linkedin.com/in/keneisha-wiggan"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-flex items-center gap-2 rounded-lg text-lg font-semibold text-[#18324A] underline-offset-4 hover:underline focus:outline-none focus:ring-4 focus:ring-[#C9974A]/40"
+            >
+              linkedin.com/in/keneisha-wiggan
+              <Icon name="external" size={18} />
+            </a>
+          </div>
+        </div>
+      </div>
+    </PageShell>
+  );
+}
+
+function PageShell({ eyebrow, title, children }) {
+  return (
+    <motion.section initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
+      <div>
+        <p className="text-sm font-bold uppercase tracking-[0.25em] text-[#7C4A18]">{eyebrow}</p>
+        <h2 className="mt-2 text-5xl font-bold tracking-tight text-[#172033]">{title}</h2>
+      </div>
+      {children}
+    </motion.section>
+  );
+}
+
+
