@@ -174,9 +174,7 @@ export default function App() {
       <header className="sticky top-0 z-50 border-b border-[#E9D5FF] bg-[#FFF7ED]/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-4 md:flex-row md:items-center md:justify-between">
           <button onClick={() => setPage("home")} className="rounded-xl text-left focus:outline-none focus:ring-4 focus:ring-[#F97360]/30">
-            <p className="text-sm uppercase tracking-[0.28em] text-[#7C3AED]">Portfolio</p>
-            <h1 className="text-lg font-black text-[#2E1065]">Keneisha Wiggan</h1>
-          </button>
+<h1 className="text-3xl font-black text-[#2E1065]">Keneisha Wiggan</h1>          </button>
 
           <nav className="flex w-full overflow-hidden rounded-2xl border border-[#E9D5FF] bg-white/80 shadow-sm md:w-auto">
             {navItems.map((item) => (
