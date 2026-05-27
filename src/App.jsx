@@ -59,17 +59,17 @@ const featuredSections = [
   {
     title: "Personal Portfolio",
     description:
-      "A recruiter-facing collection of personal projects, business ideas, writing systems, and AI learning concepts.",
+      "A collection of personal projects I completed while applying the product management lifecycle.",
     tag: "Portfolio Projects",
     route: "personal-portfolio",
   },
   {
-    title: "Relevant Work Experiences",
-    description:
-      "Selected product and program management work across AI onboarding, documentation strategy, customer feedback, and launch readiness.",
-    tag: "Professional Experience",
-    route: "work-experience",
-  },
+  title: "Industry Work Experiences",
+  description:
+    "A summary of my relevant product management experience, including five years at Microsoft.",
+  tag: "Professional Experience",
+  route: "work-experience",
+},
 ];
 
 const blogs = [
@@ -87,15 +87,27 @@ const brandBadges = [
 const proofPoints = [
   {
     number: "01",
-    label: "Clarify complex work",
+    title: "Conceive",
+    description:
+      "Drive results by identifying real user problems and brainstorming impactful solutions that align with business goals.",
   },
   {
     number: "02",
-    label: "Build systems people can follow",
+    title: "Plan",
+    description:
+      "Use market research and customer interviews to validate ideas and create a clear, prioritized roadmap that guides development.",
   },
   {
     number: "03",
-    label: "Turn strategy into outcomes",
+    title: "Develop",
+    description:
+      "Collaborate closely with development teams to define detailed features, user stories, and timelines, ensuring requirements are clear and achievable.",
+  },
+  {
+    number: "04",
+    title: "Iterate",
+    description:
+      "Launch early versions, gather user feedback quickly, test assumptions, and refine the product to meet user needs and improve outcomes.",
   },
 ];
 
@@ -220,28 +232,19 @@ function Home({ setPage }) {
 
         <div className="relative grid items-center gap-10 md:grid-cols-2">
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#F97360]/30 bg-white/70 px-4 py-2 text-sm font-bold text-[#2E1065] shadow-sm">
-              <Icon name="sparkle" size={16} className="text-[#F97360]" />
-              Product strategy. AI clarity. Career storytelling.
-            </div>
+
 
             <div>
-              <h2 className="max-w-3xl text-5xl font-black tracking-tight text-[#2E1065] md:text-6xl">
-                I turn complex product work into clear stories, systems, and experiences.
-              </h2>
+             <h2 className="max-w-3xl text-5xl font-black tracking-tight text-[#2E1065] md:text-6xl">
+  Product Manager
+</h2>
             </div>
 
-            <p className="max-w-xl text-lg leading-8 text-[#3F3F46]">
-              I’m Keneisha Wiggan — a product and program leader who helps teams organize work, improve onboarding, communicate impact, and create experiences that make people feel less lost and more confident.
-            </p>
-
-            <div className="flex flex-wrap gap-3">
-              {brandBadges.map((badge) => (
-                <span key={badge} className="rounded-full border border-[#E9D5FF] bg-white/80 px-4 py-2 text-sm font-bold text-[#581C87] shadow-sm">
-                  {badge}
-                </span>
-              ))}
-            </div>
+         <p className="max-w-xl text-lg leading-8 text-[#3F3F46]">
+  I answer the <strong className="font-bold text-[#2F1065]">why</strong>,{" "}
+  <strong className="font-bold text-[#2F1065]">what</strong>, and{" "}
+  <strong className="font-bold text-[#2F1065]">who</strong> behind the products we build. Using the power of AI, I prototype solutions, apply effective market research to build confidence in the product direction, and use clear communication and cross-functional collaboration to take products from idea to launch.
+</p>
 
             <div className="flex flex-wrap gap-3">
               <button
@@ -275,12 +278,7 @@ function Home({ setPage }) {
               </div>
             </div>
 
-            <div className="relative mx-auto -mt-8 max-w-sm rounded-3xl border border-[#E9D5FF] bg-white/90 p-5 shadow-lg backdrop-blur">
-              <p className="text-sm font-black uppercase tracking-[0.18em] text-[#F97360]">My edge</p>
-              <p className="mt-2 text-lg font-black text-[#2E1065]">
-                I make the complicated feel clear, actionable, and human.
-              </p>
-            </div>
+           
           </motion.div>
         </div>
       </section>
@@ -293,9 +291,7 @@ function Home({ setPage }) {
         <div className="mb-5 flex items-center gap-3 text-[#F97360]">
           <Icon name="pen" size={24} />
           <div>
-            <p className="text-sm font-black uppercase tracking-[0.25em] text-[#F97360]">Writing</p>
-            <h3 className="text-3xl font-black text-[#2E1065]">Ideas on AI, product clarity, and career storytelling</h3>
-          </div>
+<h3 className="text-3xl font-black text-[#2E1065]">Blog</h3>          </div>
         </div>
 
         <div className="grid gap-4 md:grid-cols-3">
@@ -320,11 +316,12 @@ function Home({ setPage }) {
 
 function ProofStrip() {
   return (
-    <section className="grid gap-4 md:grid-cols-3">
+    <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       {proofPoints.map((point) => (
         <div key={point.number} className="rounded-3xl border border-[#E9D5FF] bg-white p-5 shadow-sm">
           <p className="text-sm font-black text-[#F97360]">{point.number}</p>
-          <p className="mt-2 text-xl font-black text-[#2E1065]">{point.label}</p>
+          <p className="mt-2 text-2xl font-black text-[#2E1065]">{point.title}</p>
+          <p className="mt-3 text-sm leading-6 text-[#3F3F46]">{point.description}</p>
         </div>
       ))}
     </section>
@@ -335,14 +332,10 @@ function FeaturedWork({ setPage }) {
   return (
     <section className="rounded-[2.5rem] border border-[#E9D5FF] bg-white p-6 shadow-sm">
       <div className="mb-6">
-        <p className="text-sm font-black uppercase tracking-[0.25em] text-[#F97360]">Selected proof</p>
-        <h3 className="mt-2 text-4xl font-black text-[#2E1065]">
-          The work I want recruiters to remember
-        </h3>
-        <p className="mt-3 max-w-2xl leading-7 text-[#3F3F46]">
-          A curated view of how I think through problems, lead cross-functional work, and turn ideas into useful experiences.
-        </p>
-      </div>
+  <h3 className="text-4xl font-black text-[#2E1065]">
+    Relevant experience
+  </h3>
+</div>
 
       <div className="grid gap-5 md:grid-cols-2">
         {featuredSections.map((project) => (
@@ -351,9 +344,7 @@ function FeaturedWork({ setPage }) {
             onClick={() => setPage(project.route)}
             className="group rounded-3xl border border-[#E9D5FF] bg-[#FFF7ED] p-6 text-left shadow-sm transition hover:-translate-y-1 hover:border-[#F97360] hover:bg-[#F3E8FF] hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-[#F97360]/30"
           >
-            <p className="mb-4 inline-flex rounded-full bg-[#2E1065] px-3 py-1 text-sm font-bold text-white shadow-sm">
-              {project.tag}
-            </p>
+            
             <h4 className="text-2xl font-black text-[#2E1065]">{project.title}</h4>
             <p className="mt-3 leading-7 text-[#3F3F46]">{project.description}</p>
             <span className="mt-5 flex items-center gap-2 font-black text-[#F97360]">
@@ -422,8 +413,7 @@ function DetailCollection({ eyebrow, title, intro, items, back }) {
 
 function Blogs() {
   return (
-    <PageShell eyebrow="Blogs" title="Ideas on AI, product clarity, and career storytelling">
-      <div className="space-y-4">
+<PageShell eyebrow="" title="Blog">      <div className="space-y-4">
         {blogs.map((blog) => (
           <div key={blog} className="rounded-3xl border border-[#E9D5FF] bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:bg-[#F3E8FF]">
             <p className="text-sm font-black uppercase tracking-[0.25em] text-[#F97360]">Coming soon</p>
@@ -442,9 +432,7 @@ function Resume() {
   return (
     <PageShell eyebrow="Resume" title="A clearer view of my experience">
       <div className="rounded-3xl border border-[#E9D5FF] bg-white p-8 shadow-sm">
-        <p className="max-w-2xl leading-7 text-[#3F3F46]">
-          Download my resume for a concise view of my product, program, AI onboarding, documentation strategy, and cross-functional execution experience.
-        </p>
+       
         <a
           href={RESUME_FILE}
           download
@@ -463,9 +451,7 @@ function Contact() {
       <div className="rounded-3xl border border-[#E9D5FF] bg-white p-8 shadow-sm">
         <Icon name="mail" size={28} className="mb-4 text-[#F97360]" />
 
-        <p className="max-w-2xl leading-7 text-[#3F3F46]">
-          Reach out if you want to connect about product strategy, program management, AI adoption, onboarding, documentation, or career storytelling.
-        </p>
+       
 
         <div className="mt-8 space-y-5">
           <div className="rounded-2xl border border-[#E9D5FF] bg-[#FFF7ED] p-5">
