@@ -177,17 +177,29 @@ export default function App() {
 <h1 className="text-3xl font-black text-[#2E1065]">Keneisha Wiggan, MBA</h1>          </button>
 
           <nav className="flex w-full overflow-hidden rounded-2xl border border-[#E9D5FF] bg-white/80 shadow-sm md:w-auto">
-            {navItems.map((item) => (
-              <button
-                key={item}
-                onClick={() => setPage(item)}
-                className={`flex-1 border-r border-[#E9D5FF] px-3 py-3 text-sm font-bold capitalize last:border-r-0 hover:bg-[#F3E8FF] focus:outline-none focus:ring-4 focus:ring-[#F97360]/30 md:flex-none md:px-4 ${
-                  page === item ? "bg-[#2E1065] text-white hover:bg-[#2E1065]" : "text-[#2E1065]"
-                }`}
-              >
-                {item}
-              </button>
-            ))}
+         {navItems.map((item) =>
+  item === "blogs" ? (
+    <a
+      key={item}
+      href="https://blog.keneishawiggan.com"
+      target="_blank"
+      rel="noreferrer"
+      className="flex-1 border-r border-[#E9D5FF] px-3 py-3 text-center text-sm font-bold capitalize text-[#2E1065] last:border-r-0 hover:bg-[#F3E8FF] focus:outline-none focus:ring-4 focus:ring-[#F97360]/30 md:flex-none md:px-4"
+    >
+      {item}
+    </a>
+  ) : (
+    <button
+      key={item}
+      onClick={() => setPage(item)}
+      className={`flex-1 border-r border-[#E9D5FF] px-3 py-3 text-sm font-bold capitalize last:border-r-0 hover:bg-[#F3E8FF] focus:outline-none focus:ring-4 focus:ring-[#F97360]/30 md:flex-none md:px-4 ${
+        page === item ? "bg-[#2E1065] text-white hover:bg-[#2E1065]" : "text-[#2E1065]"
+      }`}
+    >
+      {item}
+    </button>
+  )
+)}
           </nav>
         </div>
       </header>
