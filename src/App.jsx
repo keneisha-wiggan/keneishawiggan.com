@@ -301,12 +301,14 @@ function Home({ setPage }) {
           ))}
         </div>
 
-        <button
-          onClick={() => setPage("blogs")}
-          className="mt-6 flex w-fit items-center gap-2 rounded-2xl bg-[#2E1065] px-5 py-3 font-bold text-white hover:bg-[#4C1D95] focus:outline-none focus:ring-4 focus:ring-[#F97360]/40"
-        >
-          View blogs <Icon name="arrow" />
-        </button>
+       <a
+  href="https://blog.keneishawiggan.com"
+  target="_blank"
+  rel="noreferrer"
+  className="mt-6 flex w-fit items-center gap-2 rounded-full bg-[#2E1065] px-6 py-3 font-black text-white shadow-sm transition hover:-translate-y-1 hover:bg-[#3B0764]"
+>
+  View blogs <Icon name="arrow" />
+</a>
       </section>
     </div>
   );
