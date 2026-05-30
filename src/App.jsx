@@ -411,16 +411,27 @@ function DetailCollection({ eyebrow, title, intro, items, back }) {
 
 function Blogs() {
   return (
-<PageShell eyebrow="" title="Blog">      <div className="space-y-4">
-        {blogs.map((blog) => (
-          <div key={blog} className="rounded-3xl border border-[#E9D5FF] bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:bg-[#F3E8FF]">
-            <p className="text-sm font-black uppercase tracking-[0.25em] text-[#F97360]">Coming soon</p>
-            <h3 className="mt-2 text-2xl font-black text-[#2E1065]">{blog}</h3>
-            <p className="mt-3 max-w-2xl leading-7 text-[#3F3F46]">
-              A future reflection on how clarity, storytelling, and product thinking can make work easier to understand and act on.
-            </p>
-          </div>
-        ))}
+    <PageShell eyebrow="" title="Blog">
+      <div className="space-y-4">
+        <a
+          href="https://blog.keneishawiggan.com/why-vs-code-copilot-is-poor-and-how-it-can-be-improved/"
+          target="_blank"
+          rel="noreferrer"
+          className="block rounded-3xl border border-[#E9D5FF] bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-[#F97360] hover:shadow-lg"
+        >
+          <p className="text-sm font-black uppercase tracking-[0.25em] text-[#F97360]">
+            Blog post
+          </p>
+          <h3 className="mt-2 text-2xl font-black text-[#2E1065]">
+            Why VS Code Copilot Is Poor and How It Can Be Improved
+          </h3>
+          <p className="mt-3 max-w-2xl leading-7 text-[#3F3F46]">
+            A product management reflection on how VS Code and Copilot can improve onboarding, usability, and guided workflows for beginners.
+          </p>
+          <span className="mt-5 inline-flex font-black text-[#F97360]">
+            Read article →
+          </span>
+        </a>
       </div>
     </PageShell>
   );
