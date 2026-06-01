@@ -73,9 +73,18 @@ const featuredSections = [
 ];
 
 const blogs = [
-  "How I Think About Product Onboarding",
-  "Turning Career Wins into Strong Stories",
-  "What AI Product Work Taught Me About Clarity",
+  {
+    title: "Poor experience vibe coding with Github copilot and how it can be improved",
+    url: "https://blog.keneishawiggan.com/why-vs-code-copilot-is-poor-and-how-it-can-be-improved/",
+  },
+  {
+    title: "The hardest part of Product Management is not the product, but managing stakeholders",
+    url: "PASTE-SECOND-BLOG-LINK-HERE",
+  },
+  {
+    title: "What i've learned from my top 5 mistakes as a Product Manager",
+    url: "PASTE-THIRD-BLOG-LINK-HERE",
+  },
 ];
 
 const brandBadges = [
@@ -305,13 +314,24 @@ function Home({ setPage }) {
         </div>
 
         <div className="grid gap-4 md:grid-cols-3">
-          {blogs.map((blog) => (
-            <article key={blog} className="rounded-3xl border border-[#E9D5FF] bg-[#FFF7ED] p-5 transition hover:-translate-y-1 hover:bg-[#F3E8FF]">
-              <p className="text-sm font-bold text-[#F97360]">Coming soon</p>
-              <h4 className="mt-2 font-black text-[#2E1065]">{blog}</h4>
-            </article>
-          ))}
-        </div>
+  {blogs.map((blog) => (
+    <a
+      key={blog.title}
+      href={blog.url}
+      target="_blank"
+      rel="noreferrer"
+      className="block rounded-3xl border border-[#E9D5FF] bg-[#FFF7ED] p-5 transition hover:-translate-y-1 hover:border-[#F97360] hover:bg-[#F3E8FF] hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-[#F97360]/30"
+    >
+      <h4 className="mt-2 font-black text-[#2E1065]">
+        {blog.title}
+      </h4>
+
+      <span className="mt-5 inline-flex items-center gap-2 font-black text-[#F97360]">
+        Read article <Icon name="external" size={16} />
+      </span>
+    </a>
+  ))}
+</div>
 
        <a
   href="https://blog.keneishawiggan.com"
@@ -344,26 +364,65 @@ function FeaturedWork({ setPage }) {
   return (
     <section className="rounded-[2.5rem] border border-[#E9D5FF] bg-white p-6 shadow-sm">
       <div className="mb-6">
-  <h3 className="text-4xl font-black text-[#2E1065]">
-    Relevant experience
-  </h3>
-</div>
+        <h3 className="text-4xl font-black text-[#2E1065]">
+          Relevant experience
+        </h3>
+      </div>
 
-      <div className="grid gap-5 md:grid-cols-2">
-        {featuredSections.map((project) => (
-          <button
-            key={project.title}
-            onClick={() => setPage(project.route)}
-            className="group rounded-3xl border border-[#E9D5FF] bg-[#FFF7ED] p-6 text-left shadow-sm transition hover:-translate-y-1 hover:border-[#F97360] hover:bg-[#F3E8FF] hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-[#F97360]/30"
-          >
-            
-            <h4 className="text-2xl font-black text-[#2E1065]">{project.title}</h4>
-            <p className="mt-3 leading-7 text-[#3F3F46]">{project.description}</p>
-            <span className="mt-5 flex items-center gap-2 font-black text-[#F97360]">
-              View details <Icon name="external" size={16} />
-            </span>
-          </button>
-        ))}
+      <div className="grid gap-6 md:grid-cols-2">
+        {/* Personal Projects Card */}
+        <div className="rounded-[2rem] border border-[#E9D5FF] bg-[#FFF7ED] p-6 text-left shadow-sm">
+          <h4 className="text-3xl font-black text-[#2E1065]">
+            Personal Projects
+          </h4>
+
+          <p className="mt-3 leading-7 text-[#3F3F46]">
+Explore my personal project portfolio to see how I turn user problems into clear product ideas, strategies, and solutions.          </p>
+
+          <div className="mt-6 space-y-3">
+            <a
+              href="https://blog.keneishawiggan.com/why-vs-code-copilot-is-poor-and-how-it-can-be-improved/"
+              target="_blank"
+              rel="noreferrer"
+              className="flex w-full items-center justify-between rounded-2xl border border-[#F97360] bg-white px-5 py-3 font-black text-[#2E1065] transition hover:-translate-y-0.5 hover:bg-[#FFF1ED] focus:outline-none focus:ring-4 focus:ring-[#F97360]/30"
+            >
+              View personal project blog
+              <Icon name="external" size={18} />
+            </a>
+
+            <a
+              href="https://blog.keneishawiggan.com"
+              target="_blank"
+              rel="noreferrer"
+              className="flex w-full items-center justify-between rounded-2xl border border-[#F97360] bg-white px-5 py-3 font-black text-[#2E1065] transition hover:-translate-y-0.5 hover:bg-[#FFF1ED] focus:outline-none focus:ring-4 focus:ring-[#F97360]/30"
+            >
+              View blog
+              <Icon name="external" size={18} />
+            </a>
+          </div>
+        </div>
+
+        {/* Industry Work Experience Card */}
+        <div className="rounded-[2rem] border border-[#E9D5FF] bg-[#FFF7ED] p-6 text-left shadow-sm">
+          <h4 className="text-3xl font-black text-[#2E1065]">
+            Industry Work Experience
+          </h4>
+
+          <p className="mt-3 leading-7 text-[#3F3F46]">
+            Review my relevant product management experience, including 5 years of building and lauching products at Microsoft.
+          </p>
+
+          <div className="mt-6 space-y-3">
+            <a
+              href={RESUME_FILE}
+              download
+              className="flex w-full items-center justify-between rounded-2xl bg-[#2E1065] px-5 py-3 font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#4C1D95] focus:outline-none focus:ring-4 focus:ring-[#F97360]/40"
+            >
+              Download resume
+              <Icon name="download" size={18} />
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );
