@@ -78,7 +78,7 @@ const blogs = [
     url: "https://blog.keneishawiggan.com/why-vs-code-copilot-is-poor-and-how-it-can-be-improved/",
   },
   {
-    title: "UwriteConsulting.com Case Study",
+    title: "Personal Project: UwriteConsulting.com Case Study",
     url: "https://blog.keneishawiggan.com/uwriteconsulting-com-case-study/",
   },
   //{
