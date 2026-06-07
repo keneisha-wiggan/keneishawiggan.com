@@ -78,13 +78,13 @@ const blogs = [
     url: "https://blog.keneishawiggan.com/why-vs-code-copilot-is-poor-and-how-it-can-be-improved/",
   },
   {
-    title: "The hardest part of Product Management is not the product, but managing stakeholders",
-    url: "PASTE-SECOND-BLOG-LINK-HERE",
+    title: "UwriteConsulting.com Case Study",
+    url: "https://blog.keneishawiggan.com/uwriteconsulting-com-case-study/",
   },
-  {
-    title: "What i've learned from my top 5 mistakes as a Product Manager",
-    url: "PASTE-THIRD-BLOG-LINK-HERE",
-  },
+  //{
+ //   title: "What i've learned from my top 5 mistakes as a Product Manager",
+   // url: "PASTE-THIRD-BLOG-LINK-HERE",
+ // },
 ];
 
 const brandBadges = [
@@ -381,12 +381,12 @@ Explore my personal project portfolio to see how I turn user problems into clear
 
           <div className="mt-6 space-y-3">
             <a
-              href="https://blog.keneishawiggan.com/why-vs-code-copilot-is-poor-and-how-it-can-be-improved/"
+              href="https://blog.keneishawiggan.com/uwriteconsulting-com-case-study/"
               target="_blank"
               rel="noreferrer"
               className="flex w-full items-center justify-between rounded-2xl border border-[#F97360] bg-white px-5 py-3 font-black text-[#2E1065] transition hover:-translate-y-0.5 hover:bg-[#FFF1ED] focus:outline-none focus:ring-4 focus:ring-[#F97360]/30"
             >
-              View personal project blog
+              View my personal project case study
               <Icon name="external" size={18} />
             </a>
 
@@ -396,7 +396,7 @@ Explore my personal project portfolio to see how I turn user problems into clear
               rel="noreferrer"
               className="flex w-full items-center justify-between rounded-2xl border border-[#F97360] bg-white px-5 py-3 font-black text-[#2E1065] transition hover:-translate-y-0.5 hover:bg-[#FFF1ED] focus:outline-none focus:ring-4 focus:ring-[#F97360]/30"
             >
-              View blog
+              View blogs
               <Icon name="external" size={18} />
             </a>
           </div>
