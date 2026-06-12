@@ -253,16 +253,8 @@ function Home({ setPage }) {
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
 
 
-            <div>
-             <h2 className="max-w-3xl text-5xl font-black tracking-tight text-[#2E1065] md:text-6xl">
-  Product Manager
-</h2>
-            </div>
-
-         <p className="max-w-xl text-lg leading-8 text-[#3F3F46]">
-  I answer the <strong className="font-bold text-[#2F1065]">why</strong>,{" "}
-  <strong className="font-bold text-[#2F1065]">what</strong>, and{" "}
-  <strong className="font-bold text-[#2F1065]">who</strong> behind the products we build. Using the power of AI, I prototype solutions, apply effective market research to build confidence in the product direction, and use clear communication and cross-functional collaboration to take products from idea to launch.
+        <p className="max-w-xl text-lg leading-8 text-[#3F3F46]">
+  Product Strategy professional with an MBA and enterprise SaaS experience leading cross-functional initiatives that turn data, user research, customer insights, and AI-powered solutions into measurable business outcomes.
 </p>
 
             <div className="flex flex-wrap gap-3">
